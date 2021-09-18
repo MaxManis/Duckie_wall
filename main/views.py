@@ -62,20 +62,53 @@ def user_logout(request):
     return redirect('login')
 
 
+def my_profile(request):
+    user_id = request.user.id
+    user = request.user
+    print(user)
+    profile = Profile.objects.get(user_id=user_id)
+    return render(request, 'main/my_profile.html', {
+        'user': user,
+        'profile': profile,
+        'title': 'My profile',
+    })
+
+
 def profile_edit(request):
     if request.method == 'POST':
-        form = ProfileEditForm(request.POST, request.FILES)
-        if form.is_valid():
-            user = form.get_user()
-            print(user)
-            if user is not None:
-                login(request, user)
-                return redirect('home')
-            else:
-                messages.error(request, 'Error of login!')
+        user_form = UserEditForm(request.POST, request.FILES, instance=request.user)
+        profile_form = ProfileEditForm(request.POST, request.FILES, instance=request.user.profile)
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
+            messages.success(request, 'Ваш профиль был успешно обновлен!')
+            return redirect('home')
+        else:
+            messages.error(request, 'Error of login!')
     else:
-        form = ProfileEditForm()
+        profile_form = ProfileEditForm()
+        user_form = UserEditForm()
     return render(request, 'main/profile_edit.html', {
-        'form': form,
+        'profile_form': profile_form,
+        'user_form': user_form,
         'title': 'Login',
+    })
+
+
+def create(request):
+    if request.method == 'POST':
+        form = PostForm(request.POST, request.FILES)
+        if form.is_valid():
+            user_id = request.user.id
+            user = User.objects.get(id=user_id)
+            content = form.cleaned_data['content']
+            photo = form.cleaned_data['photo']
+            new_post = Posts.objects.create(user=user, content=content, photo=photo)
+            # form.save()
+            return redirect('home')
+    else:
+        form = PostForm()
+    return render(request, 'main/create.html', {
+        'form': form,
+        'title': 'Create',
     })

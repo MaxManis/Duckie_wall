@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+</head>
+<body>
+    <div>
+    <form enctype="multipart/form-data" action="{% url 'create' %}" method="post">
+        {% csrf_token %}
+
+        {{ form.as_p }}
+
+        <div><button type="submit" > ADD NEWS </button></div>
+    </form>
+    <br>
+</div>
+</body>
+</html>

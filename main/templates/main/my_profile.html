@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+</head>
+<body>
+
+<div>
+    <a href="{% url 'home' %}"> home</a>
+    {% if not request.user.is_authenticated %}
+        <a href="{% url 'login' %}"> login</a>
+        <a href="{% url 'register' %}"> register</a>
+    {% else %}
+        <span>Hello, <a href="{% url 'my_profile' %}"> {{ user.username }}</a></span>
+        <a href="{% url 'logout' %}"> logout</a>
+        <a href="{% url 'create' %}"> create post</a>
+    {% endif %}
+</div>
+
+<h1>{{ user.username }}</h1>
+
+{% if profile.avatar %}
+    <img src="{{ profile.avatar.url }}" alt="XXX" width="350" >
+{% endif %}
+
+{% if user.first_name %}
+    <p>First name: {{ user.first_name }}</p>
+{% else %}
+    <p>First name: -NONE-</p>
+{% endif %}
+
+{% if user.last_name %}
+    <p>Last name: {{ user.last_name }}</p>
+{% else %}
+    <p>Last name: -NONE-</p>
+{% endif %}
+
+{% if user.email %}
+    <p>Email: {{ user.email }}</p>
+{% else %}
+    <p>Email: -NONE-</p>
+{% endif %}
+
+{% if user.bio %}
+    <p>Bio: {{ profile.bio }}</p>
+{% else %}
+    <p>Bio: -NONE-</p>
+{% endif %}
+
+{% if user.birth_date %}
+    <p>Email: {{ profile.birth_date }}</p>
+{% else %}
+    <p>Email: -NONE-</p>
+{% endif %}
+
+{% if user.location %}
+    <p>Location: {{ profile.location }}</p>
+{% else %}
+    <p>Location: -NONE-</p>
+{% endif %}
+
+<a href="{% url 'profile_edit' %}"> Edit profile</a>
+
+</body>
+</html>

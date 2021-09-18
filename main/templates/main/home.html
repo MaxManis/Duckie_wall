@@ -11,7 +11,7 @@
         <a href="{% url 'login' %}"> login</a>
         <a href="{% url 'register' %}"> register</a>
     {% else %}
-        <span>Hello, <a href="{% url 'profile_edit' %}"> {{ user.username }}</a></span>
+        <span>Hello, <a href="{% url 'my_profile' %}"> {{ user.username }}</a></span>
         <a href="{% url 'logout' %}"> logout</a>
     {% endif %}
 </div>

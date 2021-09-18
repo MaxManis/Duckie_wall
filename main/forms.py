@@ -26,7 +26,18 @@ class ProfileEditForm(ModelForm):
     class Meta:
         model = Profile
         fields = ['avatar', 'bio', 'birth_date', 'location']
-        # user
+
+
+class UserEditForm(ModelForm):
+    class Meta:
+        model = User
+        fields = ('first_name', 'last_name', 'email')
+
+
+class PostForm(ModelForm):
+    class Meta:
+        model = Posts
+        fields = ['photo', 'content']
 
 
 

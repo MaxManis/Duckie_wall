@@ -18,10 +18,16 @@
 </div>
 
 <div>
+
+</div>
+
+<div>
     <form enctype="multipart/form-data" method="post">
         {% csrf_token %}
 
-        {{ form.as_p }}
+        {{ user_form.as_p }}
+
+        {{ profile_form.as_p }}
 
         <div><button type="submit"> Save </button></div>
     </form>

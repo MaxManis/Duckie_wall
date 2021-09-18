@@ -19,6 +19,13 @@ class Profile(models.Model):
     location = models.CharField(max_length=30, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
+    def __str__(self):
+        if self.bio:
+            item = self.bio
+        else:
+            item = "empty profile bio of user " + str(self.user)
+        return item
+
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
@@ -76,7 +83,7 @@ class Follow(models.Model):
     user_to = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_to')
 
     def __str__(self):
-        f"{self.user_from} follows {self.user_to}"
+        return f"{self.user_from} follows {self.user_to}"
 
     # class Meta:
     #     abstract = True
