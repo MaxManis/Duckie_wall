@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ Title }}</title>
+</head>
+<body>
+
+{% for user in users %}
+    <p><a href="{% url 'get_user' user.id %}">{{user.username}}</a> </p>
+    {% if user.profile.avatar %}
+        <img src="{{ user.profile.avatar.url }}" alt="XXX" width="350" >
+    {% else %}
+        <img src="https://ih1.redbubble.net/image.1417647673.2505/st,small,507x507-pad,600x600,f8f8f8.jpg" alt="X" width="350">
+    {% endif %}
+{% endfor %}
+
+</body>
+</html>

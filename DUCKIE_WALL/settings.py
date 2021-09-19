@@ -139,4 +139,4 @@ INTERNAL_IPS = [
     '127.0.0.1',
 ]
 
-AUTH_PROFILE_MODULE = 'accounts.Profile'
+# AUTH_PROFILE_MODULE = 'accounts.Profile'

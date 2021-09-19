@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+</head>
+<body>
+
+<div>
+
+    <p>{{post.user}} </p>
+    <p >
+        <a href="#">{{post.user}}.</a> Создано {{post.created_at|timesince}} назад.
+        Просмотров: {{ post.views }}
+    </p>
+    {% if post.photo %}
+        <img src="{{ post.photo.url }}" alt="X" width="650" height="450">
+    {% else %}
+        <img src="https://ih1.redbubble.net/image.1417647673.2505/st,small,507x507-pad,600x600,f8f8f8.jpg" alt="X" width="650" height="450">
+    {% endif %}
+    <p >{{post.content|linebreaks}}</p>
+
+    <hr align="left" width="700" size="2" color="#ff0000" />
+
+    <br>
+</div>
+
+<div>
+
+    {% for item in comments %}
+        <p>{{item.user}}</p>
+        <p >{{item.content|linebreaks}}</p>
+        <p>{{item.created_at}}</p>
+
+        <hr align="left" width="400" size="1" color="#000000" />
+    {% endfor %}
+
+</div>
+
+<div>
+
+    <form method="post">
+        {% csrf_token %}
+
+        {{ form.as_p }}
+
+        <div><button type="submit" > ADD COMMENT </button></div>
+    </form>
+
+</div>
+
+</body>
+</html>

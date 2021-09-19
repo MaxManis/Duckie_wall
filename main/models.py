@@ -26,6 +26,10 @@ class Profile(models.Model):
             item = "empty profile bio of user " + str(self.user)
         return item
 
+    class Meta:
+        verbose_name = 'Профиль'
+        verbose_name_plural = 'Профили'
+
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
@@ -47,6 +51,9 @@ class Posts (models.Model):
     photo = models.ImageField(verbose_name='Медиа', upload_to='pics/%Y/%m/%d/')
     created_at = models.DateTimeField(verbose_name='Создано', auto_now_add=True)
     views = models.IntegerField(default=0)
+
+    def get_absolute_url(self):
+        return reverse('one_post', kwargs={'post_id': self.pk})
 
     def __str__(self):
         return self.content
@@ -72,7 +79,7 @@ class Comments(models.Model):
     class Meta:
         verbose_name = 'Комментарий'
         verbose_name_plural = 'Комментарии'
-        ordering = ['-created_at']
+        ordering = ['created_at']
 
 
 # FOLLOW model
@@ -85,5 +92,6 @@ class Follow(models.Model):
     def __str__(self):
         return f"{self.user_from} follows {self.user_to}"
 
-    # class Meta:
-    #     abstract = True
+    class Meta:
+        verbose_name = 'Подписка'
+        verbose_name_plural = 'Подписки'

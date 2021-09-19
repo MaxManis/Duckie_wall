@@ -40,4 +40,10 @@ class PostForm(ModelForm):
         fields = ['photo', 'content']
 
 
+class CommentsForm(ModelForm):
+    class Meta:
+        model = Comments
+        fields = ['content']
+
+
 
