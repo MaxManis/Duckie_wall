@@ -1,19 +1,31 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>{{ Title }}</title>
-</head>
-<body>
+{% extends 'base.html' %}
+
+{% block title %}
+{{ request.user.username }}
+{% endblock %}
+
+
+{% block content %}
 
 {% for user in users %}
-    <p><a href="{% url 'get_user' user.id %}">{{user.username}}</a> </p>
-    {% if user.profile.avatar %}
-        <img src="{{ user.profile.avatar.url }}" alt="XXX" width="350" >
-    {% else %}
-        <img src="https://ih1.redbubble.net/image.1417647673.2505/st,small,507x507-pad,600x600,f8f8f8.jpg" alt="X" width="350">
+    {% if user.id != request.user.id %}
+        <div class="sea-prof">
+        {% if user.profile.avatar %}
+            <h2>
+                <a class="user-name-sea" href="{% url 'get_user' user.id %}">
+                    <img class="avatar-pic-sea" src="{{ user.profile.avatar.url }}" alt="XXX" width="350" >{{user.username}}
+                </a>
+            </h2>
+        {% else %}
+            <h2>
+                <a class="user-name-sea" href="{% url 'get_user' user.id %}">
+                    <img class="avatar-pic-sea" src="https://ih1.redbubble.net/image.1417647673.2505/st,small,507x507-pad,600x600,f8f8f8.jpg"
+                         alt="X" width="350">{{user.username}}
+                </a>
+            </h2>
+        {% endif %}
+        </div>
     {% endif %}
 {% endfor %}
 
-</body>
-</html>
+{% endblock %}

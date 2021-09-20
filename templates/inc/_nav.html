@@ -1,0 +1,21 @@
+<nav class="nav">
+    {% if not request.user.is_authenticated %}
+        <a href="{% url 'home' %}"><i class="fas fa-home"></i>Home</a>
+        <a href="{% url 'login' %}"><i class="fas fa-sign-in-alt"></i>Login</a>
+        <a href="{% url 'register' %}"><i class="fas fa-user-plus"></i>Register</a>
+    {% else %}
+        <a href="{% url 'my_profile' %}">Hello, <i class="fas fa-user"> </i> {{ user.username }}</a>
+        <a href="{% url 'home' %}"><i class="fas fa-home"></i>Home</a>
+        <a href="{% url 'create' %}"><i class="fas fa-plus-square"></i>Create post</a>
+        <a href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i>Logout</a>
+    {% endif %}
+
+
+<div class="search">
+    <form action="{% url 'search' %}" method="get">
+        <div><input name="q" type="text" class="search_fild" placeholder="Search users..."> </div>
+        <div><button type="submit" class="search_bt"><i class='fas fa-search'></i>Search </button></div>
+    </form>
+</div>
+
+</nav>

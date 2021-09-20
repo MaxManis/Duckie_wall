@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="`ru`" class="all-text">
+<head>
+    <!-- connect static to file -->
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{% block title %}User{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'main/css/style.css' %}" type="text/css">
+    <script src="https://kit.fontawesome.com/f86734ca01.js" crossorigin="anonymous"></script>
+</head>
+<body>
+{% include 'inc/_nav.html' %}
+
+{% block search %}
+
+{% endblock %}
+
+
+
+{% if messages %}
+    {% for message in messages %}
+        {%if message.tags == 'error' %}
+            <div class="err-box"> {{message}} </div>
+        {% else %}
+            <div class="sucss-box">{{message}}</div>
+        {% endif %}
+    {% endfor %}
+{% endif %}
+
+{% block catbar %}
+
+{% endblock %}
+
+<div class="main">
+{% block content %}
+content
+{% endblock %}
+</div>
+
+</body>
+</html>

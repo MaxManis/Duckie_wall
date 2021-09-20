@@ -15,7 +15,14 @@ from .forms import *
 
 
 def home(request):
-    return render(request, 'main/index.html')
+    user_id = request.user.id
+    following = Follow.objects.filter(user_from=user_id).values('user_to')
+    print(following)
+    following_posts = Posts.objects.filter(user_id__in=following).select_related('user')
+    return render(request, 'main/index.html', {
+        "following": following,
+        'following_posts': following_posts,
+    })
 
 
 def user_register(request):
@@ -67,12 +74,18 @@ def my_profile(request):
     user = request.user
     print(user)
     profile = Profile.objects.get(user_id=user_id)
-    posts = Posts.objects.filter(user_id=user_id)
+    posts = Posts.objects.filter(user_id=user_id).select_related('user')
+    followers = Follow.objects.filter(user_to=user_id).count()
+    following = Follow.objects.filter(user_from=user_id).count()
+    posts_cou = posts.count()
     return render(request, 'main/my_profile.html', {
         'user': user,
         'profile': profile,
         'posts': posts,
         'title': 'My profile',
+        'followers': followers,
+        'following': following,
+        'posts_cou': posts_cou,
     })
 
 
@@ -106,8 +119,7 @@ def create(request):
             content = form.cleaned_data['content']
             photo = form.cleaned_data['photo']
             new_post = Posts.objects.create(user=user, content=content, photo=photo)
-            # form.save()
-            return redirect('home')
+            return redirect(reverse_lazy('one_post', args=[new_post.id]))
     else:
         form = PostForm()
     return render(request, 'main/create.html', {
@@ -128,11 +140,12 @@ def one_post(request, post_id):
             return redirect(reverse_lazy('one_post', args=[post_id]))
     else:
         form = CommentsForm()
-    views_plus = Posts.objects.get(pk=post_id)
-    views_plus.views = F('views') + 1
-    views_plus.save()
-    comments = Comments.objects.filter(post_id=post_id)
+
+    views = Posts.objects.get(pk=post_id)
+    views.views = F('views') + 1
+    views.save()
     post = Posts.objects.get(pk=post_id)
+    comments = Comments.objects.filter(post_id=post_id).select_related('post', 'user')
 
     return render(request, 'main/one_post.html', {
         'post': post,
@@ -145,7 +158,7 @@ def one_post(request, post_id):
 def get_user(request, user_id):
     user_from = User.objects.get(pk=request.user.id)
     user_to = User.objects.get(pk=user_id)
-    if_follow_2 = Follow.objects.filter(user_from=user_from, user_to=user_to)
+    if_follow_2 = Follow.objects.filter(user_from=user_from, user_to=user_to).select_related('user_from', 'user_to')
     if request.method == 'POST':
         if if_follow_2:
             del_follow = Follow.objects.get(user_from=user_from, user_to=user_to)
@@ -154,10 +167,9 @@ def get_user(request, user_id):
         else:
             new_follow = Follow.objects.create(user_from=user_from, user_to=user_to)
             print(new_follow)
-    # user = User.objects.get(pk=user_id)
     profile = Profile.objects.get(user_id=user_id)
-    posts = Posts.objects.filter(user_id=user_id)
-    if_follow = Follow.objects.filter(user_from=user_from, user_to=user_to)
+    posts = Posts.objects.filter(user_id=user_id).select_related('user')
+    if_follow = Follow.objects.filter(user_from=user_from, user_to=user_to).select_related('user_from', 'user_to')
     return render(request, 'main/get_user.html', {
         'user': user_to,
         'profile': profile,
@@ -169,15 +181,8 @@ def get_user(request, user_id):
 
 def search(request):
     title_s = request.GET.get('q')
-    # if title_s == None:
-    #     title_s = 'nope'
-    # if '/' in title_s:
-    #     title_s = title_s[:title_s.find('/')]
     user_s = User.objects.filter(username__icontains=title_s)
     print(user_s)
-    # profile = Profile.objects.filter(user_id=user_s)
-    #print(profile)
-        # .select_related('category')
     return render(request, 'main/search.html', {
         'users': user_s,
         'title': 'Search',

@@ -1,19 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>{{ title }}</title>
-</head>
-<body>
+{% extends 'base.html' %}
+
+{% block title %}
+    {{ request.user.username }}
+{% endblock %}
+
+
+{% block content %}
+
     <div>
-    <form enctype="multipart/form-data" action="{% url 'create' %}" method="post">
-        {% csrf_token %}
+        <form enctype="multipart/form-data" action="{% url 'create' %}" method="post">
+            {% csrf_token %}
 
-        {{ form.as_p }}
+            {{ form.as_p }}
 
-        <div><button type="submit" > ADD NEWS </button></div>
-    </form>
-    <br>
-</div>
-</body>
-</html>
+            <div><button type="submit" > ADD NEWS </button></div>
+        </form>
+        <br>
+    </div>
+
+{% endblock %}
