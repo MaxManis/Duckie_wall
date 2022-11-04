@@ -1,0 +1,12 @@
+::selection {
+  color: #000000;
+  background: #8DFD1B;
+}
+
+.text-color--green {
+    color: #8DFD1B;
+}
+
+.text-color--green:hover {
+    color: #000000;
+}

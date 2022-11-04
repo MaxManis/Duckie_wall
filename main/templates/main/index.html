@@ -9,24 +9,67 @@
 
 {% if request.user.is_authenticated %}
     <h1>HELLO {{ user.username }}!</h1>
+
+    <div class="posts-home">
+        {% for item in following_posts %}
+            <div class="posts-home__item post">
+                    <div class="post__content">
+                        <div class="post__header">
+                            <div class="post__header-box">
+                                {{ item.id }}
+                            </div>
+                            <div class="post__header-content">
+                                <span class="post__views">
+                                    <i class="fas fa-eye"></i>
+                                    Views: {{ item.views }}
+                                </span>
+
+                                <span class="post__created-ago">
+                                    Created {{item.created_at|timesince}} ago.
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="post__body">
+                            <a href="{{item.get_absolute_url}}" >
+                                <img class="post__img" src="{{ item.photo.url }}" alt="post photo">
+                            </a>
+
+                            <p>
+                                <a class="post__user" href="{% url 'get_user' item.user_id %}">{{item.user}}:</a>
+                            </p>
+
+                            <div class="post__title">{{ item.content|truncatewords:15 }}</div>
+
+                            <div class="">
+                                <a class="button button--main" href="{{item.get_absolute_url}}" >
+                                    Open POST
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+    {#        <div class="posts">#}
+    {#            <a href="{{item.get_absolute_url}}" >#}
+    {#                <img class="img-round" src="{{ item.photo.url }}" alt="X" width="650">#}
+    {#            </a>#}
+    {#            <p >#}
+    {#                <a class="text-post-mr" href="{% url 'get_user' item.user_id %}">{{item.user}}</a>#}
+    {##}
+    {#            </p>#}
+    {#            <p class="text-post-mr">{{ item.content|truncatewords:15 }}</p>#}
+    {#            <div class="bt-post-mr"><a class="floating-button" href="{{item.get_absolute_url}}" >Open POST</a></div>#}
+    {#            <span class="text-post-mr invi-text">Создано {{item.created_at|timesince}} назад. Просмотров: {{ item.views }}</span>#}
+    {#        </div>#}
+        {% endfor %}
+    </div>
+
+
 {% else %}
     <h1>HELLO MASTER!</h1>
 {% endif %}
 
-{% for item in following_posts %}
-        <div class="posts">
 
-            <a href="{{item.get_absolute_url}}" >
-                <img class="img-round" src="{{ item.photo.url }}" alt="X" width="650">
-            </a>
-            <p >
-                <a class="text-post-mr" href="{% url 'get_user' item.user_id %}">{{item.user}}.</a>
-
-            </p>
-            <p class="text-post-mr">{{ item.content|truncatewords:15 }}</p>
-            <div class="bt-post-mr"><a class="floating-button" href="{{item.get_absolute_url}}" >Open POST</a></div>
-            <span class="text-post-mr invi-text">Создано {{item.created_at|timesince}} назад. Просмотров: {{ item.views }}</span>
-        </div>
-{% endfor %}
 
 {% endblock %}

@@ -10,7 +10,6 @@ from django.conf import settings
 
 # PROFILE model
 
-
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
     avatar = models.ImageField(verbose_name='Аватар', upload_to='pics/ava/%Y/%m/%d/', blank=True)
@@ -43,13 +42,11 @@ def save_user_profile(sender, instance, **kwargs):
 
 
 # POSTS model
-
-
 class Posts (models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    content = models.TextField(verbose_name='Содержание', blank=True, max_length=2000)
-    photo = models.ImageField(verbose_name='Медиа', upload_to='pics/%Y/%m/%d/')
-    created_at = models.DateTimeField(verbose_name='Создано', auto_now_add=True)
+    content = models.TextField(verbose_name='Content', blank=True, max_length=2000)
+    photo = models.ImageField(verbose_name='Image', upload_to='pics/%Y/%m/%d/')
+    created_at = models.DateTimeField(verbose_name='created at', auto_now_add=True)
     views = models.IntegerField(default=0)
 
     def get_absolute_url(self):
@@ -70,8 +67,8 @@ class Posts (models.Model):
 class Comments(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     post = models.ForeignKey(Posts, on_delete=models.CASCADE)
-    content = models.TextField(verbose_name='содержание', max_length=400)
-    created_at = models.DateTimeField(verbose_name='создано', auto_now_add=True)
+    content = models.TextField(verbose_name='comment', max_length=400)
+    created_at = models.DateTimeField(verbose_name='created at', auto_now_add=True)
 
     def __str__(self):
         return self.content

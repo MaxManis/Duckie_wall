@@ -7,89 +7,120 @@
 
 {% block content %}
 
-    <div class="prof-info">
-
-        <h1>{{ user.username }}</h1>
-
-        {% if profile.avatar %}
-            <img class="avatar-pic" src="{{ profile.avatar.url }}" alt="XXX" width="350" >
-        {% else %}
-            <img class="avatar-pic" src="https://ih1.redbubble.net/image.1417647673.2505/st,small,507x507-pad,600x600,f8f8f8.jpg" alt="X" width="350">
-        {% endif %}
-
-        {% if user.first_name %}
-            <p>First name: {{ user.first_name }}</p>
-        {% else %}
-            <p>First name: -NONE-</p>
-        {% endif %}
-
-        {% if user.last_name %}
-            <p>Last name: {{ user.last_name }}</p>
-        {% else %}
-            <p>Last name: -NONE-</p>
-        {% endif %}
-
-        {% if user.email %}
-            <p>Email: {{ user.email }}</p>
-        {% else %}
-            <p>Email: -NONE-</p>
-        {% endif %}
-
-        {% if user.bio %}
-            <p>Bio: {{ profile.bio }}</p>
-        {% else %}
-            <p>Bio: -NONE-</p>
-        {% endif %}
-
-        {% if user.birth_date %}
-            <p>Email: {{ profile.birth_date }}</p>
-        {% else %}
-            <p>Email: -NONE-</p>
-        {% endif %}
-
-        {% if user.location %}
-            <p>Location: {{ profile.location }}</p>
-        {% else %}
-            <p>Location: -NONE-</p>
-        {% endif %}
-
-        {% if request.user.id != user.id %}
-            {% if if_follow %}
-                <p class="invi-text">You already follow {{ user.username }}</p>
-                <form method="post">
-                    {% csrf_token %}
-                    <div><button class="floating-button" type="submit" > Stop follow </button></div>
-                </form>
+    <div class="profile-info">
+        <div class="profile-info__header">
+            <i class="far fa-folder-open"></i>
+            {{ user.username }}
+        </div>
+        <div class="profile-info__left">
+            {% if profile.avatar %}
+                <img class="profile-info__avatar" src="{{ profile.avatar.url }}" alt="XXX" width="350" >
             {% else %}
-                <form method="post">
-                    {% csrf_token %}
-                    <div><button class="floating-button" type="submit" > Follow </button></div>
-                </form>
+                <img
+                    class="profile-info__avatar"
+                    src="https://ih1.redbubble.net/image.1417647673.2505/st,small,507x507-pad,600x600,f8f8f8.jpg"
+                    alt="X"
+                    width="350"
+                >
             {% endif %}
-        {% endif %}
 
+            {% if request.user.id != user.id %}
+                {% if if_follow %}
+                    <form method="post">
+                        {% csrf_token %}
+                        <button class="button button--secondary" type="submit" > Unfollow </button>
+                    </form>
+
+                    <div class="profile-info__followed">You already follow {{ user.username }}</div>
+                {% else %}
+                    <form method="post">
+                        {% csrf_token %}
+                        <button class="button button--main" type="submit" > Follow </button>
+                    </form>
+                {% endif %}
+            {% endif %}
+        </div>
+
+        <div class="profile-info__right">
+            {% if user.first_name %}
+                <p>First name: {{ user.first_name }}</p>
+            {% else %}
+                <p>First name: <i class="far fa-circle-question text-color--green"></i></p>
+            {% endif %}
+
+            {% if user.last_name %}
+                <p>Last name: {{ user.last_name }}</p>
+            {% else %}
+                <p>Last name: <i class="far fa-circle-question text-color--green"></i></p>
+            {% endif %}
+
+            {% if user.email %}
+                <p>Email: {{ user.email }}</p>
+            {% else %}
+                <p>Email: <i class="far fa-circle-question text-color--green"></i></p>
+            {% endif %}
+
+            {% if user.bio %}
+                <p>Bio: {{ profile.bio|truncatechars:200 }}</p>
+            {% else %}
+                <p>Bio: <i class="far fa-circle-question text-color--green"></i></p>
+            {% endif %}
+
+            {% if user.birth_date %}
+                <p>Email: {{ profile.birth_date }}</p>
+            {% else %}
+                <p>Email: <i class="far fa-circle-question text-color--green"></i></p>
+            {% endif %}
+
+            {% if user.location %}
+                <p>Location: {{ profile.location }}</p>
+            {% else %}
+                <p>Location: <i class="far fa-circle-question text-color--green"></i></p>
+            {% endif %}
+        </div>
     </div>
 
     <br>
-    <hr class="line-prof" size="2" />
-    <br>
 
-    {% for item in posts %}
+    <div class="posts-grid">
+        {% for item in posts %}
+            <div class="posts-grid__item post">
+                <div class="post__content">
+                    <div class="post__header">
+                        <div class="post__header-box">
+                            {{ item.id }}
+                        </div>
+                        <div class="post__header-content">
+                            <span class="post__views">
+                                <i class="fas fa-eye"></i>
+                                Views: {{ item.views }}
+                            </span>
 
-        <div class="posts">
+                            <span class="post__created-ago">
+                                Created {{item.created_at|timesince}} ago.
+                            </span>
+                        </div>
+                    </div>
 
-            <a href="{{item.get_absolute_url}}" >
-                <img class="img-round" src="{{ item.photo.url }}" alt="X" width="650">
-            </a>
-            <p >
-                <a class="text-post-mr" href="{% url 'get_user' item.user_id %}">{{item.user}}.</a>
+                    <div class="post__body">
+                        <a href="{{item.get_absolute_url}}" >
+                            <img class="post__img img-round" src="{{ item.photo.url }}" alt="post photo">
+                        </a>
 
-            </p>
-            <p class="text-post-mr">{{ item.content|truncatewords:15 }}</p>
-            <div class="bt-post-mr"><a class="floating-button" href="{{item.get_absolute_url}}" >Open POST</a></div>
-            <span class="text-post-mr invi-text">Создано {{item.created_at|timesince}} назад. Просмотров: {{ item.views }}</span>
-        </div>
+                        <p>
+                            <a class="post__user" href="{% url 'get_user' item.user_id %}">{{item.user}}:</a>
+                        </p>
 
-    {% endfor %}
+                        <div class="post__title">{{ item.content|truncatewords:15 }}</div>
+
+                        <a class="button button--main" href="{{item.get_absolute_url}}" >
+                            Open POST
+                        </a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
 
 {% endblock %}

@@ -1,0 +1,82 @@
+.comment {
+    background: #222222;
+    border: 1px solid #8DFD1B;
+}
+
+.comment__content {
+}
+
+.comment__body {
+    padding: 18px;
+}
+
+.comment__user {
+    position: relative;
+    font-family: 'DM Mono', monospace;
+    font-size: 18px;
+    color: #6abd16;
+    text-decoration: none;
+    margin-bottom: 15px;
+
+    padding: 0 10px;
+
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.comment__user:before {
+    content: '';
+    display: block;
+    position: absolute;
+
+    height: 100%;
+    width: 3px;
+
+    background-color: #6abd16;
+}
+
+.comment__user:hover {
+    background-color: #6abd16;
+    color: #000000;
+}
+
+.comment__text {
+    font-size: 16px;
+    margin: 10px 0 0;
+}
+
+.comment__footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid #8DFD1B;
+    padding: 8px;
+}
+
+.comment__footer-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-size: 18px;
+    font-family: 'DM Mono', monospace;
+
+    height: 25px;
+    width: 25px;
+    border: 1px solid #8DFD1B;
+    color: #8DFD1B;
+
+    background-color: transparent;
+
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.comment__footer-box:hover {
+    background-color: #8DFD1B;
+    color: #000000;
+}
+
+.comment__created-at {
+    color: #ffffff;
+    font-size: 16px;
+    font-family: 'DM Mono', monospace;
+}

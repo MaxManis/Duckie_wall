@@ -1,53 +1,113 @@
 {% extends 'base.html' %}
 
 {% block title %}
-{{ request.user.username }}
+    {{ request.user.username }}
 {% endblock %}
-
 
 {% block content %}
 
-<div>
+    <div class="post">
+        <div class="post__content">
+            <div class="post__header">
+                <div class="post__header-box">
+                    {{ post.id }}
+                </div>
 
-    <p>{{post.user}} </p>
-    <p >
-        <a href="#">{{post.user}}.</a> Создано {{post.created_at|timesince}} назад.
-        Просмотров: {{ post.views }}
-    </p>
-    {% if post.photo %}
-        <img src="{{ post.photo.url }}" alt="X" width="650" >
+                <div class="post__header-content">
+                    <span class="post__views">
+                        <i class="fas fa-eye"></i>
+                        Views: {{ post.views }}
+                    </span>
+
+                    <span class="post__created-ago">
+                        Created {{post.created_at|timesince}} ago.
+                    </span>
+                </div>
+            </div>
+
+            <div class="post__body">
+                <img class="post__img" src="{{ post.photo.url }}" alt="post photo">
+
+                <p>
+                    <a class="post__user" href="{% url 'get_user' post.user_id %}">{{post.user}}:</a>
+                </p>
+
+                <div class="post__title">{{ post.content|linebreaksbr }}</div>
+            </div>
+        </div>
+    </div>
+
+    {% if comments %}
+        <div class="comments-title">
+            <i class="far fa-comment-dots"></i>
+            COMMENTS
+        </div>
+
+        <div class="comments">
+            {% for item in comments %}
+                <div class="comments__item comment">
+                    <div class="comment__content">
+                        <div class="comment__body">
+                            <div>
+                                <a class="comment__user" href="{% url 'get_user' item.user_id %}">
+                                    {{item.user}}
+                                </a>
+                            </div>
+
+                            <p class="comment__text">
+                                {{item.content|linebreaksbr}}
+                            </p>
+                        </div>
+
+
+                        <div class="comment__footer">
+                            <div class="comment__footer-box">
+                                {{ item.id }}
+                            </div>
+
+                            <div class="comment__created-at">
+                                {{item.created_at}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
     {% else %}
-        <img src="https://ih1.redbubble.net/image.1417647673.2505/st,small,507x507-pad,600x600,f8f8f8.jpg" alt="X" width="650" height="450">
+        <div class="comments-title">
+            <i class="fas fa-square-xmark"></i>
+            NO COMMENTS YET
+        </div>
     {% endif %}
-    <p >{{post.content|linebreaks}}</p>
 
-    <hr align="left" width="700" size="2" color="#ff0000" />
 
-    <br>
-</div>
+    {% if request.user.is_authenticated %}
+        <div>
+{#            <form method="post">#}
+{#                {% csrf_token %}#}
+{##}
+{#                {{ form.as_p }}#}
+{##}
+{#                <div>#}
+{#                    <button class="button button--secondary" type="submit" > ADD COMMENT </button>#}
+{#                </div>#}
+{#            </form>#}
 
-<div>
+            <form method="post" class="comment-form">
+                {% csrf_token %}
 
-    {% for item in comments %}
-        <p>{{item.user}}</p>
-        <p >{{item.content|linebreaks}}</p>
-        <p>{{item.created_at}}</p>
+                {% for field in form %}
+                    <label class="comment-form__label" for="{{ field.auto_id }}">
+                        <i class="fas fa-quote-right"></i>
+                        Write a {{ field.label }}:
+                    </label>
 
-        <hr align="left" width="400" size="1" color="#000000" />
-    {% endfor %}
+                    {{ field }}
+                {% endfor %}
 
-</div>
-
-<div>
-
-    <form method="post">
-        {% csrf_token %}
-
-        {{ form.as_p }}
-
-        <div><button type="submit" > ADD COMMENT </button></div>
-    </form>
-
-</div>
+                <button class="button button--secondary" type="submit" > ADD COMMENT </button>
+            </form>
+        </div>
+    {% endif %}
 
 {% endblock %}

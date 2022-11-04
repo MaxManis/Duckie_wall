@@ -4,87 +4,142 @@
     {{ request.user.username }}
 {% endblock %}
 
-
 {% block content %}
 
-
-
-
-    <div class="prof-info">
-
-        <h1>{{ user.username }}</h1>
-
-        <span>Followers: {{ followers }}</span>
-        <span>Following: {{ following }}</span>
-        <span>Posts: {{ posts_cou }}</span>
-        <div >
+    <div class="profile-info">
+        <div class="profile-info__header">
+            <i class="far fa-folder-open"></i>
+            {{ user.username }}
+        </div>
+        <div class="profile-info__left">
             {% if profile.avatar %}
-                <div><img class="avatar-pic" src="{{ profile.avatar.url }}" alt="XXX" width="350" ></div>
+                <img class="profile-info__avatar" src="{{ profile.avatar.url }}" alt="XXX" width="350" >
             {% else %}
-                <div><img class="avatar-pic" src="https://ih1.redbubble.net/image.1417647673.2505/st,small,507x507-pad,600x600,f8f8f8.jpg" alt="X" width="350"></div>
+                <img
+                    class="profile-info__avatar"
+                    src="https://ih1.redbubble.net/image.1417647673.2505/st,small,507x507-pad,600x600,f8f8f8.jpg"
+                    alt="X"
+                    width="350"
+                >
             {% endif %}
+
+            <div class="profile-info__table">
+                <div class="profile-info__col">
+                    <div class="profile-info__row">
+                        Followers:
+                    </div>
+
+                    <div class="profile-info__row">
+                        {{ followers }}
+                    </div>
+                </div>
+
+                <div class="profile-info__col">
+                    <div class="profile-info__row">
+                        Following:
+                    </div>
+
+                    <div class="profile-info__row">
+                        {{ following }}
+                    </div>
+                </div>
+
+                <div class="profile-info__col">
+                    <div class="profile-info__row">
+                        Posts:
+                    </div>
+
+                    <div class="profile-info__row">
+                        {{ posts_cou }}
+                    </div>
+                </div>
+            </div>
+
+            <a class="button button--secondary" href="{% url 'profile_edit' %}"> Edit profile</a>
         </div>
 
-        {% if user.first_name %}
-            <p>First name: {{ user.first_name }}</p>
-        {% else %}
-            <p>First name: -NONE-</p>
-        {% endif %}
+        <div class="profile-info__right">
+            {% if user.first_name %}
+                <p>First name: {{ user.first_name }}</p>
+            {% else %}
+                <p>First name: <i class="far fa-circle-question text-color--green"></i></p>
+            {% endif %}
 
-        {% if user.last_name %}
-            <p>Last name: {{ user.last_name }}</p>
-        {% else %}
-            <p>Last name: -NONE-</p>
-        {% endif %}
+            {% if user.last_name %}
+                <p>Last name: {{ user.last_name }}</p>
+            {% else %}
+                <p>Last name: <i class="far fa-circle-question text-color--green"></i></p>
+            {% endif %}
 
-        {% if user.email %}
-            <p>Email: {{ user.email }}</p>
-        {% else %}
-            <p>Email: -NONE-</p>
-        {% endif %}
+            {% if user.email %}
+                <p>Email: {{ user.email }}</p>
+            {% else %}
+                <p>Email: <i class="far fa-circle-question text-color--green"></i></p>
+            {% endif %}
 
-        {% if user.bio %}
-            <p>Bio: {{ profile.bio }}</p>
-        {% else %}
-            <p>Bio: -NONE-</p>
-        {% endif %}
+            {% if user.bio %}
+                <p>Bio: {{ profile.bio|truncatechars:200 }}</p>
+            {% else %}
+                <p>Bio: <i class="far fa-circle-question text-color--green"></i></p>
+            {% endif %}
 
-        {% if user.birth_date %}
-            <p>Email: {{ profile.birth_date }}</p>
-        {% else %}
-            <p>Email: -NONE-</p>
-        {% endif %}
+            {% if user.birth_date %}
+                <p>Email: {{ profile.birth_date }}</p>
+            {% else %}
+                <p>Email: <i class="far fa-circle-question text-color--green"></i></p>
+            {% endif %}
 
-        {% if user.location %}
-            <p>Location: {{ profile.location }}</p>
-        {% else %}
-            <p>Location: -NONE-</p>
-        {% endif %}
-
-        <a class="floating-button" href="{% url 'profile_edit' %}"> Edit profile</a>
-
+            {% if user.location %}
+                <p>Location: {{ profile.location }}</p>
+            {% else %}
+                <p>Location: <i class="far fa-circle-question text-color--green"></i></p>
+            {% endif %}
+        </div>
     </div>
 
     <br>
-    <hr class="line-prof" size="2" />
-    <br>
 
-    {% for item in posts %}
+    <div class="posts-grid">
+        {% for item in posts %}
+            <div class="posts-grid__item post">
+                <div class="post__content">
+                    <div class="post__header">
+                        <div class="post__header-box">
+                            {{ item.id }}
+                        </div>
+                        <div class="post__header-content">
+                            <span class="post__views">
+                                <i class="fas fa-eye"></i>
+                                Views: {{ item.views }}
+                            </span>
 
-        <div class="posts">
+                            <span class="post__created-ago">
+                                Created {{item.created_at|timesince}} ago.
+                            </span>
+                        </div>
+                    </div>
 
-            <a href="{{item.get_absolute_url}}" >
-                <img class="img-round" src="{{ item.photo.url }}" alt="X" width="650">
-            </a>
-            <p >
-                <a class="text-post-mr" href="{% url 'get_user' item.user_id %}">{{item.user}}.</a>
+                    <div class="post__body">
+                        <a href="{{item.get_absolute_url}}" >
+                            <img class="post__img" src="{{ item.photo.url }}" alt="post photo">
+                        </a>
 
-            </p>
-            <p class="text-post-mr">{{ item.content|truncatewords:15 }}</p>
-            <div class="bt-post-mr"><a class="floating-button" href="{{item.get_absolute_url}}" >Open POST</a></div>
-            <span class="text-post-mr invi-text">Создано {{item.created_at|timesince}} назад. Просмотров: {{ item.views }}</span>
-        </div>
+                        <p>
+                            <a class="post__user" href="{% url 'get_user' item.user_id %}">{{item.user}}:</a>
+                        </p>
 
-    {% endfor %}
+                        <div class="post__title">{{ item.content|truncatewords:15 }}</div>
+
+                        <div class="">
+                            <a class="button button--main" href="{{item.get_absolute_url}}" >
+                                Open POST
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
 
 {% endblock %}

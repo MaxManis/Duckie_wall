@@ -1,21 +1,144 @@
+{% load static %}
 <nav class="nav">
+{#    <a class="nav__link" href="{% url 'home' %}">#}
+{#        <i class="fas fa-atom"></i> Duckie Wall#}
+{#    </a>#}
+
+    <a style="display: flex" href="{% url 'home' %}">
+        <img
+            class="nav__logo"
+            src="{% static 'main/media/DuckieWall-web-LOGO.png' %}"
+            alt="logo"
+        >
+    </a>
+
     {% if not request.user.is_authenticated %}
-        <a href="{% url 'home' %}"><i class="fas fa-home"></i>Home</a>
-        <a href="{% url 'login' %}"><i class="fas fa-sign-in-alt"></i>Login</a>
-        <a href="{% url 'register' %}"><i class="fas fa-user-plus"></i>Register</a>
+        <div class="nav__container">
+            <a class="nav__link" href="{% url 'home' %}">
+                <i class="fas fa-home"></i> Home
+            </a>
+
+            <a class="nav__link" href="{% url 'login' %}">
+                <i class="fas fa-sign-in-alt"></i> Login
+            </a>
+
+            <a class="nav__link" href="{% url 'register' %}">
+                <i class="fas fa-user-plus"></i> Register
+            </a>
+        </div>
+
     {% else %}
-        <a href="{% url 'my_profile' %}">Hello, <i class="fas fa-user"> </i> {{ user.username }}</a>
-        <a href="{% url 'home' %}"><i class="fas fa-home"></i>Home</a>
-        <a href="{% url 'create' %}"><i class="fas fa-plus-square"></i>Create post</a>
-        <a href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i>Logout</a>
+        <div class="nav__container">
+            <a class="nav__link" href="{% url 'my_profile' %}">
+                <i class="fas fa-user"> </i> {{ request.user.username }}
+            </a>
+
+            <a class="nav__link" href="{% url 'home' %}">
+                <i class="fas fa-home"></i> Home
+            </a>
+
+            <a class="nav__link" href="{% url 'create' %}">
+                <i class="fas fa-plus-square"></i> Create post
+            </a>
+
+            <a class="nav__link" href="{% url 'logout' %}">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </a>
+        </div>
     {% endif %}
 
+    <div class="search">
+        <form class="search__form" action="{% url 'search' %}" method="get">
+            <div>
+                <input name="qwery" type="search" class="input input--search-desktop" placeholder="Search users...">
+            </div>
 
-<div class="search">
-    <form action="{% url 'search' %}" method="get">
-        <div><input name="q" type="text" class="search_fild" placeholder="Search users..."> </div>
-        <div><button type="submit" class="search_bt"><i class='fas fa-search'></i>Search </button></div>
-    </form>
-</div>
-
+            <div>
+                <button type="submit" class="button button--main button--search">
+                    <i class='fas fa-search'></i>
+                    Search
+                </button>
+            </div>
+        </form>
+    </div>
 </nav>
+
+<div class="menu">
+    <input class="menu__toggle" id="menu__toggle" type="checkbox" />
+    <label class="menu__btn" for="menu__toggle">
+        <span></span>
+    </label>
+
+    <ul class="menu__box">
+        <a
+            style="display: flex"
+            href="{% url 'home' %}"
+        >
+            <img
+                class="nav__logo menu__logo"
+                src="{% static 'main/media/DuckieWall-web-LOGO.png' %}"
+                alt="logo"
+            >
+        </a>
+
+        <div class="search">
+            <form class="search__form" action="{% url 'search' %}" method="get">
+                <div>
+                    <input name="qwery" type="search" class="input input--search-mobile" placeholder="Search users...">
+                </div>
+
+                <div>
+                    <button type="submit" class="button button--main button--search">
+                        <i class='fas fa-search'></i>
+                        Search
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        {% if not request.user.is_authenticated %}
+            <li>
+                <a class="menu__item" href="{% url 'home' %}">
+                    <i class="fas fa-home"></i> Home
+                </a>
+            </li>
+
+            <li>
+                <a class="menu__item" href="{% url 'login' %}">
+                    <i class="fas fa-sign-in-alt"></i> Login
+                </a>
+            </li>
+
+            <li>
+                <a class="menu__item" href="{% url 'register' %}">
+                    <i class="fas fa-user-plus"></i> Register
+                </a>
+            </li>
+        {% else %}
+
+            <li>
+                <a class="menu__item" href="{% url 'my_profile' %}">
+                    <i class="fas fa-user"> </i> {{ request.user.username }}
+                </a>
+            </li>
+
+            <li>
+                <a class="menu__item" href="{% url 'home' %}">
+                    <i class="fas fa-home"></i> Home
+                </a>
+            </li>
+
+            <li>
+                <a class="menu__item" href="{% url 'create' %}">
+                    <i class="fas fa-plus-square"></i> Create post
+                </a>
+            </li>
+
+            <li>
+                <a class="menu__item" href="{% url 'logout' %}">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </a>
+            </li>
+        {% endif %}
+    </ul>
+</div>

@@ -11,9 +11,6 @@ from django.core.mail import send_mail
 from .models import *
 from .forms import *
 
-# Create your views here.
-
-
 def home(request):
     user_id = request.user.id
     following = Follow.objects.filter(user_from=user_id).values('user_to')
@@ -63,7 +60,6 @@ def user_login(request):
         'title': 'Login',
     })
 
-
 def user_logout(request):
     logout(request)
     return redirect('login')
@@ -101,8 +97,13 @@ def profile_edit(request):
         else:
             messages.error(request, 'Error of login!')
     else:
+        # user_id = request.user.id
+        # user = User.objects.get(pk=user_id)
         profile_form = ProfileEditForm()
-        user_form = UserEditForm()
+        user_form = UserEditForm(initial={
+            'email': request.user.email,
+            'first_name': request.user.first_name,
+        })
     return render(request, 'main/profile_edit.html', {
         'profile_form': profile_form,
         'user_form': user_form,
@@ -174,13 +175,18 @@ def get_user(request, user_id):
         'user': user_to,
         'profile': profile,
         'posts': posts,
-        'title': 'My profile',
+        'title': 'profile',
         'if_follow': if_follow,
     })
 
 
 def search(request):
-    title_s = request.GET.get('q')
+    title_s = request.GET.get('qwery')
+    if not title_s:
+        return render(request, 'main/search.html', {
+            'users': '',
+            'title': 'Search',
+        })
     user_s = User.objects.filter(username__icontains=title_s)
     print(user_s)
     return render(request, 'main/search.html', {
