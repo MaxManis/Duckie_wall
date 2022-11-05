@@ -8,15 +8,15 @@ from django.core.validators import FileExtensionValidator
 
 
 class UserLoginForm(AuthenticationForm):
-    username = CharField(label='Логин', widget=(TextInput(attrs={})))
-    password = CharField(label='Пароль', widget=(PasswordInput(attrs={})))
+    username = CharField(label='Логин', widget=(TextInput(attrs={'class': 'input'})))
+    password = CharField(label='Пароль', widget=(PasswordInput(attrs={'class': 'input', 'type': 'password'})))
 
 
 class UserRegisterForm(UserCreationForm):
-    username = CharField(label='Логин', widget=(TextInput(attrs={})))
-    password1 = CharField(label='Пароль', widget=(PasswordInput(attrs={})))
-    password2 = CharField(label='Подтверждение пароля', widget=(PasswordInput(attrs={})))
-    email = EmailField(label='Электронная почта', help_text="Введите cвой действующий почтовый ящик", widget=(EmailInput(attrs={})))
+    username = CharField(label='Логин', widget=(TextInput(attrs={'class': 'input'})))
+    password1 = CharField(label='Пароль', widget=(PasswordInput(attrs={'class': 'input'})))
+    password2 = CharField(label='Подтверждение пароля', widget=(PasswordInput(attrs={'class': 'input'})))
+    email = EmailField(label='Электронная почта', help_text="Введите cвой действующий почтовый ящик", widget=(EmailInput(attrs={'class': 'input'})))
 
     class Meta:
         model = User
@@ -27,12 +27,22 @@ class ProfileEditForm(ModelForm):
     class Meta:
         model = Profile
         fields = ['avatar', 'bio', 'birth_date', 'location']
+        widgets = {
+            'birth_date': DateInput(attrs={'class': 'input', 'type': 'date'}),
+            'location': TextInput(attrs={'class': 'input'}),
+            'bio': Textarea(attrs={'class': 'input'}),
+        }
 
 
 class UserEditForm(ModelForm):
     class Meta:
         model = User
         fields = ('first_name', 'last_name', 'email')
+        widgets = {
+            'first_name': TextInput(attrs={'class': 'input'}),
+            'last_name': TextInput(attrs={'class': 'input'}),
+            'email': EmailInput(attrs={'class': 'input'}),
+        }
 
 
 class PostForm(ModelForm):
@@ -46,7 +56,7 @@ class PostForm(ModelForm):
             'photo': ImageField,
         }
         widgets = {
-            'content': Textarea(attrs={'class': 'new-post__content-input'}),
+            'content': Textarea(attrs={'class': 'new-post__content-input input'}),
         }
 
 

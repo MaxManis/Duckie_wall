@@ -4,7 +4,6 @@
     {{ request.user.username }}
 {% endblock %}
 
-
 {% block content %}
 
     <div class="profile-info">
@@ -31,7 +30,7 @@
                         <button class="button button--secondary" type="submit" > Unfollow </button>
                     </form>
 
-                    <div class="profile-info__followed">You already follow {{ user.username }}</div>
+                    <div class="profile-info__followed">You're already following {{ user.username }}</div>
                 {% else %}
                     <form method="post">
                         {% csrf_token %}
@@ -60,19 +59,19 @@
                 <p>Email: <i class="far fa-circle-question text-color--green"></i></p>
             {% endif %}
 
-            {% if user.bio %}
+            {% if profile.bio %}
                 <p>Bio: {{ profile.bio|truncatechars:200 }}</p>
             {% else %}
                 <p>Bio: <i class="far fa-circle-question text-color--green"></i></p>
             {% endif %}
 
-            {% if user.birth_date %}
+            {% if profile.birth_date %}
                 <p>Email: {{ profile.birth_date }}</p>
             {% else %}
                 <p>Email: <i class="far fa-circle-question text-color--green"></i></p>
             {% endif %}
 
-            {% if user.location %}
+            {% if profile.location %}
                 <p>Location: {{ profile.location }}</p>
             {% else %}
                 <p>Location: <i class="far fa-circle-question text-color--green"></i></p>

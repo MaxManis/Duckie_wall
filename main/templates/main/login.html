@@ -12,7 +12,7 @@
         {% csrf_token %}
 
         {% comment %}
-        {{ form.as_p }}
+            {{ form.as_p }}
         {% endcomment %}
 
         <p>Username: </p>
@@ -23,7 +23,7 @@
         <div class="err">{{ form.password.errors }}</div>
         {{ form.password }}
 
-        <div><button type="submit"> Login </button></div>
+        <button class="button button--main" type="submit"> Login </button>
     </form>
 </div>
 

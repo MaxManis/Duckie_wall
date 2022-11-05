@@ -1,0 +1,34 @@
+.input {
+    outline: none;
+    resize: none;
+    background: #333333;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    font-family: 'DM Mono', monospace;
+    font-size: 18px;
+    color: white;
+
+    transition: border 0.3s;
+}
+
+.input--search-mobile {
+    width: 155px;
+    margin-left: 10px;
+}
+
+.input--search-desktop {
+    width: 180px;
+    margin-left: 10px;
+}
+
+.input:hover {
+    border: 1px solid #3f6f0e;
+}
+
+.input::placeholder {
+    color: #3f6f0e;
+    font-family: 'DM Mono', monospace;
+}
+
+.input:focus {
+    border: 1px solid #8DFD1B;
+}

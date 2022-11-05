@@ -1,9 +1,6 @@
 {% load static %}
-<nav class="nav">
-{#    <a class="nav__link" href="{% url 'home' %}">#}
-{#        <i class="fas fa-atom"></i> Duckie Wall#}
-{#    </a>#}
 
+<nav class="nav">
     <a style="display: flex" href="{% url 'home' %}">
         <img
             class="nav__logo"
@@ -19,11 +16,11 @@
             </a>
 
             <a class="nav__link" href="{% url 'login' %}">
-                <i class="fas fa-sign-in-alt"></i> Login
+                <i class="fas fa-sign-in-alt"></i> Log In
             </a>
 
             <a class="nav__link" href="{% url 'register' %}">
-                <i class="fas fa-user-plus"></i> Register
+                <i class="fas fa-user-plus"></i> Sing Up
             </a>
         </div>
 
@@ -42,7 +39,7 @@
             </a>
 
             <a class="nav__link" href="{% url 'logout' %}">
-                <i class="fas fa-sign-out-alt"></i> Logout
+                <i class="fas fa-sign-out-alt"></i> Log Out
             </a>
         </div>
     {% endif %}
@@ -105,13 +102,13 @@
 
             <li>
                 <a class="menu__item" href="{% url 'login' %}">
-                    <i class="fas fa-sign-in-alt"></i> Login
+                    <i class="fas fa-sign-in-alt"></i> Log In
                 </a>
             </li>
 
             <li>
                 <a class="menu__item" href="{% url 'register' %}">
-                    <i class="fas fa-user-plus"></i> Register
+                    <i class="fas fa-user-plus"></i> Sing Up
                 </a>
             </li>
         {% else %}
@@ -130,13 +127,13 @@
 
             <li>
                 <a class="menu__item" href="{% url 'create' %}">
-                    <i class="fas fa-plus-square"></i> Create post
+                    <i class="fas fa-plus-square"></i> Create a post
                 </a>
             </li>
 
             <li>
                 <a class="menu__item" href="{% url 'logout' %}">
-                    <i class="fas fa-sign-out-alt"></i> Logout
+                    <i class="fas fa-sign-out-alt"></i> Log Out
                 </a>
             </li>
         {% endif %}

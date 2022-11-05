@@ -8,11 +8,12 @@
 {% block content %}
 
 {% if request.user.is_authenticated %}
-    <h1>HELLO {{ user.username }}!</h1>
+    {% if following_posts %}
+        <h1>Your feed:</h1>
 
-    <div class="posts-home">
-        {% for item in following_posts %}
-            <div class="posts-home__item post">
+        <div class="posts-home">
+            {% for item in following_posts %}
+                <div class="posts-home__item post">
                     <div class="post__content">
                         <div class="post__header">
                             <div class="post__header-box">
@@ -49,25 +50,13 @@
                         </div>
                     </div>
                 </div>
-
-    {#        <div class="posts">#}
-    {#            <a href="{{item.get_absolute_url}}" >#}
-    {#                <img class="img-round" src="{{ item.photo.url }}" alt="X" width="650">#}
-    {#            </a>#}
-    {#            <p >#}
-    {#                <a class="text-post-mr" href="{% url 'get_user' item.user_id %}">{{item.user}}</a>#}
-    {##}
-    {#            </p>#}
-    {#            <p class="text-post-mr">{{ item.content|truncatewords:15 }}</p>#}
-    {#            <div class="bt-post-mr"><a class="floating-button" href="{{item.get_absolute_url}}" >Open POST</a></div>#}
-    {#            <span class="text-post-mr invi-text">Создано {{item.created_at|timesince}} назад. Просмотров: {{ item.views }}</span>#}
-    {#        </div>#}
-        {% endfor %}
-    </div>
-
-
+            {% endfor %}
+        </div>
+    {% else %}
+        <h1>Your feed will be here.</h1>
+    {% endif %}
 {% else %}
-    <h1>HELLO MASTER!</h1>
+    <h1>Duckie, please, Log In or Sing Up to see your feed!</h1>
 {% endif %}
 
 

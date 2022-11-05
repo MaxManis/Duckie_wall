@@ -89,13 +89,16 @@ def profile_edit(request):
     if request.method == 'POST':
         user_form = UserEditForm(request.POST, request.FILES, instance=request.user)
         profile_form = ProfileEditForm(request.POST, request.FILES, instance=request.user.profile)
+
+        print(profile_form)
         if user_form.is_valid() and profile_form.is_valid():
+            print('valid')
             user_form.save()
             profile_form.save()
             messages.success(request, 'Ваш профиль был успешно обновлен!')
-            return redirect('home')
+            return redirect('my_profile')
         else:
-            messages.error(request, 'Error of login!')
+            messages.error(request, '')  # Error on profile edit!
     else:
         # user_id = request.user.id
         # user = User.objects.get(pk=user_id)
@@ -104,10 +107,12 @@ def profile_edit(request):
             'email': request.user.email,
             'first_name': request.user.first_name,
         })
+
+    print(profile_form)
     return render(request, 'main/profile_edit.html', {
         'profile_form': profile_form,
         'user_form': user_form,
-        'title': 'Login',
+        'title': 'Edit profile',
     })
 
 
@@ -125,7 +130,7 @@ def create(request):
         form = PostForm()
     return render(request, 'main/create.html', {
         'form': form,
-        'title': 'Create',
+        'title': 'Create a post',
     })
 
 

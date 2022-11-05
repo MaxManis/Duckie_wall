@@ -2,7 +2,7 @@
     z-index: 10;
     position: fixed; /* Set the navbar to fixed position */
     top: 0; /* Position the navbar at the top of the page */
-    display: none;
+    display: flex;
     flex-direction: row;
     justify-content: space-between;
     width: 100%;
@@ -11,9 +11,9 @@
     border-bottom: 2px solid #131313;
 }
 
-@media (min-width: 760px) {
+@media (max-width: 760px) {
     .nav {
-        display: flex;
+        display: none;
     }
 }
 
@@ -28,6 +28,20 @@
 
     transition: color 0.3s, background-color 0.3s;
 }
+
+@media (min-width: 760px) {
+    .nav__link {
+        padding: 20px 6px;
+    }
+}
+
+@media (min-width: 960px) {
+    .nav__link {
+        padding: 20px 16px;
+    }
+}
+
+
 
 .nav__link:hover {
     background: #8DFD1B;

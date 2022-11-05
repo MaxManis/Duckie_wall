@@ -77,19 +77,19 @@
                 <p>Email: <i class="far fa-circle-question text-color--green"></i></p>
             {% endif %}
 
-            {% if user.bio %}
+            {% if profile.bio %}
                 <p>Bio: {{ profile.bio|truncatechars:200 }}</p>
             {% else %}
                 <p>Bio: <i class="far fa-circle-question text-color--green"></i></p>
             {% endif %}
 
-            {% if user.birth_date %}
-                <p>Email: {{ profile.birth_date }}</p>
+            {% if profile.birth_date %}
+                <p>Birth date: {{ profile.birth_date }}</p>
             {% else %}
-                <p>Email: <i class="far fa-circle-question text-color--green"></i></p>
+                <p>Birth date: <i class="far fa-circle-question text-color--green"></i></p>
             {% endif %}
 
-            {% if user.location %}
+            {% if profile.location %}
                 <p>Location: {{ profile.location }}</p>
             {% else %}
                 <p>Location: <i class="far fa-circle-question text-color--green"></i></p>

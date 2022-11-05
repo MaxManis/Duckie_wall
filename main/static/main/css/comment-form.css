@@ -1,0 +1,38 @@
+.comment-form {
+    padding: 30px 0;
+}
+
+.comment-form__label {
+    display: block;
+    position: relative;
+
+    font-size: 20px;
+    color: #ffffff;
+
+    margin-bottom: 10px;
+    padding-left: 10px;
+}
+
+.comment-form__label:before {
+    content: '';
+    display: block;
+    position: absolute;
+    left: 0;
+
+    height: 100%;
+    width: 3px;
+
+    background-color: #ffffff;
+}
+
+.comment-form__input {
+    height: 55px;
+    width: 40%;
+}
+
+@media (max-width: 760px) {
+    .comment-form__input {
+        width: 90%;
+        height: 75px;
+    }
+}

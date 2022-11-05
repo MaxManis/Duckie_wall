@@ -10,3 +10,11 @@
 .text-color--green:hover {
     color: #000000;
 }
+
+.errorlist > li {
+    padding: 15px;
+    border: 1px solid red;
+
+    background-color: #333333;
+    list-style-type: none;
+}

@@ -12,11 +12,7 @@
 
             {% csrf_token %}
 
-            {{ form.as_p }}
-
-
-        {% comment %}
-            <p>Username: </p>
+            <p>Login: </p>
             <div class="err">{{ form.username.errors }}</div>
             {{ form.username }}
 
@@ -24,16 +20,19 @@
             <div class="err">{{ form.email.errors }}</div>
             {{ form.email }}
 
-            <p>Pass:</p>
+            <p>Password:</p>
             <div class="err">{{ form.password1.errors }}</div>
             {{ form.password1 }}
 
-            <p>Pass2:</p>
+            <p>Submit password:</p>
             <div class="err">{{ form.password2.errors }}</div>
             {{ form.password2 }}
-        {% endcomment %}
 
-            <div><button type="submit"> Register </button></div>
+            {% comment %}
+                {{ form.as_p }}
+            {% endcomment %}
+
+            <button class="button button--main" type="submit"> Register </button>
         </form>
     </div>
 

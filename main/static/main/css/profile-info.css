@@ -1,6 +1,7 @@
 .profile-info {
     position: relative;
     display: flex;
+    flex-direction: row;
     justify-content: space-evenly;
     gap: 20px;
 
@@ -8,6 +9,12 @@
 
     padding: 35px;
     background-color: #222222;
+}
+
+@media (max-width: 760px) {
+    .profile-info {
+        flex-direction: column;
+    }
 }
 
 .profile-info__header {
@@ -61,6 +68,12 @@
     font-family: 'DM Mono', monospace;
 }
 
+@media (max-width: 760px) {
+    .profile-info__right {
+        display: none;
+    }
+}
+
 .profile-info__avatar {
     margin: 0 auto;
     border: 1px solid #8DFD1B;
@@ -83,3 +96,8 @@
     padding-top: 20px;
 }
 
+@media (max-width: 760px) {
+    .profile-info__followed {
+        bottom: -30px;
+    }
+}
