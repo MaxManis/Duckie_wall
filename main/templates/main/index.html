@@ -55,14 +55,28 @@
     {% else %}
         <h1>Your feed will be here.</h1>
         <a
-            style="text-decoration: underline; color: #6abd16"
+            style="font-size: 20px; text-decoration: underline; color: #6abd16"
             href="/search/?qwery=u"
         >
             SOME USERS IS HERE
         </a>
     {% endif %}
 {% else %}
-    <h1>Duckie, please, Log In or Sing Up to see your feed!</h1>
+    <div class="main">
+        <h1 style="color: #6abd16">
+            Duckie, please, <a style="color: #8DFD1B" href="/login">Login</a> or <a style="color: #8DFD1B" href="/register">Sing-Up</a> to see your feed!
+        </h1>
+        <hr />
+        <h2 style="color: #8DFD1B">Duckie Wall its:</h2>
+        <h2>Create your own account</h2>
+        <img width="100%" src="https://telegra.ph/file/e1d14ff39a3845109a4e8.png">
+        <hr />
+        <h2>Share your posts with others</h2>
+        <img width="100%" src="https://telegra.ph/file/05818a28ba8dd52680450.png">
+        <hr />
+        <h2>Follow other users to see their posts</h2>
+        <img width="100%" src="https://telegra.ph/file/1b0fd8847a670a8ef7bd4.png">
+    </div>
 {% endif %}
 
 
